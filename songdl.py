@@ -1,10 +1,18 @@
+
+###importing modules
 import urllib
 from BeautifulSoup import BeautifulSoup as bs
+
+###songs name input from the user
 songname=raw_input("enter the song name in a specific song (like for yaaron dosti enter yaaron-dosti)")
+
+###searching the song
 url1="http://justfreemp3.com/search/mp3/1/"+songname+".html"
 soup=bs(urllib.urlopen(url1).read())
 redirecturl=str(soup.find('a',rel="nofollow"))
 list1=list(redirecturl)
+
+###getting the perfect mp3 source url and removing the unwanted things
 for i in range(1000):
   if list1[i]=='h' and list1[i+1]=='r' and list1[i+2]=='e'and list1[i+3]=='f'and list1[i+4]=='='and list1[i+5]=='"':
     break
@@ -13,7 +21,6 @@ for j in range(1000):
     break
 
 finalurl1=redirecturl[i+6:j+4]
-#print finalurl1
 finallist1=list(finalurl1)
 for i in range(1000):
   if finallist1[i]=='a' and finallist1[i+1]=='m' and finallist1[i+2]=='p' and finallist1[i+3]==';':
@@ -24,14 +31,16 @@ for i in range(1000):
   if finallist2[i]=='a' and finallist2[i+1]=='m' and finallist2[i+2]=='p' and finallist2[i+3]==';':
     break
 finalurl=finalurl2[0:i]+finalurl2[i+4:]
-
-#print finalurl
 songurl=urllib.urlopen(finalurl).geturl()
-#print songurl
 
-path=raw_input("where to save file");
-f=open(path+"songdownloaded.mp3",'wb')
+###input from user for getting the path where file will be saved
+path=raw_input("where to save file :");
+
+###writing the song to a file i.e. saving it somewhere
+f=open(path+songname+".mp3",'wb')
 f.write(urllib.urlopen(finalurl).read())
 f.close()
 print "done , saved in " + path  
+
+###end of program
 
