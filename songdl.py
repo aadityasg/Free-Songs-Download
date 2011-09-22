@@ -1,13 +1,19 @@
-
 ###importing modules
 import urllib
 from BeautifulSoup import BeautifulSoup as bs
 
 ###songs name input from the user
-songname=raw_input("enter the song name in a specific song (like for yaaron dosti enter yaaron-dosti)")
+songname=raw_input("enter the song name : ")
+songnamelist=list(songname)
+x=len(songnamelist)
+songnamesrch=''
+for i in range(x):
+   if songnamelist[i]==' ':
+      songnamelist[i]='-'
+   songnamesrch=songnamesrch+songnamelist[i]
 
 ###searching the song
-url1="http://justfreemp3.com/search/mp3/1/"+songname+".html"
+url1="http://justfreemp3.com/search/mp3/1/"+songnamesrch+".html"
 soup=bs(urllib.urlopen(url1).read())
 redirecturl=str(soup.find('a',rel="nofollow"))
 list1=list(redirecturl)
